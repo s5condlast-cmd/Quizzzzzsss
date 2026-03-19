@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz & Flashcard System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        
+        <!--  NEW: LANDING PAGE -->
+        <div id="landing-page" class="view active">
+            <h2>Web Systems and Technologies</h2>
+            <p>Welcome to the learning portal</p>
+            <button class="btn-quiz" onclick="showView('handout-selection-page')">Start</button>
+        </div>
+
+        <!-- 📂 NEW: HANDOUT SELECTION PAGE -->
+        <div id="handout-selection-page" class="view">
+            <h2>Select a Handout</h2>
+            <button class="btn-quiz" onclick="selectHandout('04_Handout_1')">04_Handout_1</button>
+            <button class="btn-quiz" onclick="showPartModal('05_Handout_1')">05_Handout_1</button>
+            <button style="background: gray; margin-top: 15px;" onclick="showView('landing-page')">Back to Title</button>
+        </div>
+
+        <!-- 弹出框 (Modal) for Part Selection -->
+        <div id="part-modal" class="modal-overlay" style="display: none;">
+            <div class="modal-content">
+                <h3>Select Part</h3>
+                <p id="modal-handout-name" style="font-weight: bold; color: var(--secondary-flashcard);"></p>
+                <button class="btn-quiz" onclick="selectPart(1)">Part 1 (Questions 1-20)</button>
+                <button class="btn-quiz" onclick="selectPart(2)">Part 2 (Questions 21-40)</button>
+                <button style="background: #e74c3c; margin-top: 10px;" onclick="hidePartModal()">Cancel</button>
+            </div>
+        </div>
+
+        <!-- 🏠 HOME PAGE (Mode Selection) -->
+        <div id="home-page" class="view">
+            <h2 id="selected-handout-title">Mode Selection</h2>
+            <p>Select your learning mode</p>
+            <button class="btn-quiz" onclick="goToMode('quiz')">Start Quiz Mode</button>
+            <button class="btn-flashcard" onclick="goToMode('flashcard')">Study Flashcards</button>
+            <button style="background: gray; margin-top: 15px;" onclick="showView('handout-selection-page')">Change Handout</button>
+        </div>
+
+        <!-- 🟦 QUIZ PAGE -->
+        <div id="quiz-page" class="view">
+            <!-- Progress Bar UI -->
+            <div class="progress-container">
+                <div id="quiz-progress-bar" class="progress-bar"></div>
+            </div>
+            
+            <h3 id="quiz-question-text">Question goes here</h3>
+            
+            <!-- Standard Quiz Choices -->
+            <div id="quiz-choices"></div>
+
+            <!-- NEW: Hidden Flashcard for Post-Answer Explanation -->
+            <div id="quiz-flashcard-container" class="flashcard-container" style="display: none; margin-top: 20px;" onclick="flipQuizCard()">
+                <div class="flashcard" id="quiz-flashcard-inner">
+                    <div class="card-face card-front" id="quiz-card-front">Front</div>
+                    <div class="card-face card-back">
+                        <strong style="color:var(--secondary-flashcard); font-size: 16px;">Answer:</strong>
+                        <div id="quiz-card-answer" style="color:var(--primary-quiz); margin-bottom: 10px;"></div>
+                        <strong style="color:var(--secondary-flashcard); font-size: 16px;">Explanation:</strong>
+                        <div id="quiz-card-explanation" class="explanation-text"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Manual Next Button -->
+            <button id="quiz-next-btn" class="btn-quiz" style="display: none;" onclick="manualNext()">Next Question ➡️</button>
+
+            <!-- Footer area with Home button on the left of Question count -->
+            <div class="quiz-footer">
+                <button class="btn-home-small" onclick="goHome()">Home</button>
+                <p id="quiz-progress" style="font-size: 14px; color: gray; margin: 0;"></p>
+            </div>
+        </div>
+
+        <!-- 🟩 RESULT PAGE -->
+        <div id="result-page" class="view">
+            <h2>Quiz Complete!</h2>
+            <h1 id="result-score">0/0</h1>
+            <p id="result-message">Feedback Message</p>
+            <button class="btn-quiz" onclick="restartQuiz()">Retry Quiz</button>
+            <button class="btn-flashcard" onclick="goHome()">Back to Home</button>
+        </div>
+
+        <!-- 🟪 DEDICATED FLASHCARD PAGE -->
+        <div id="flashcard-page" class="view">
+            <div class="flashcard-container" onclick="flipStudyCard()">
+                <div class="flashcard" id="study-flashcard-inner">
+                    <div class="card-face card-front" id="study-card-front">Front</div>
+                    <div class="card-face card-back">
+                        <strong style="color:var(--secondary-flashcard); font-size: 16px;">Answer:</strong>
+                        <div id="study-card-answer" style="color:var(--primary-quiz); margin-bottom: 10px;"></div>
+                        <strong style="color:var(--secondary-flashcard); font-size: 16px;">Explanation:</strong>
+                        <div id="study-card-explanation" class="explanation-text"></div>
+                    </div>
+                </div>
+            </div>
+            <p style="font-size: 12px; color: gray;">Click card to flip</p>
+            <button class="btn-flashcard" onclick="nextStudyFlashcard()">Next Card</button>
+            <button style="background: gray; margin-top: 5px;" onclick="goHome()">Back to Home</button>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
